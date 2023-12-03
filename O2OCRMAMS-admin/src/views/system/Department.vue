@@ -149,7 +149,7 @@
             return {
                 state: true,
                 treeDepts: [],
-                employees: [],
+                employees: [], // 新增+修改：存放部门经理的数据
                 managers: [],
                 parentDepts: [],
                 filters: {
@@ -162,22 +162,18 @@
                 page: 1,
                 size: 10,
                 listLoading: false,
-                sels: [],//列表选中列
-                addFormVisible: false,//新增界面是否显示
+                sels: [], //列表选中列
+                addFormVisible: false, //新增界面是否显示
                 addLoading: false,
                 addFormRules: {
                     name: [
-                        /*
-                            required(必须): true,
-                            trigger（触发条件）: 'blur（光标移开触发）'
-                        */
+                        // required(必须): true,
+                        // trigger（触发条件）: blur（光标移开触发）
                         {required: true, message: '请输入部门名称', trigger: 'blur'}
                     ],
                     sn: [
-                        /*
-                            required(必须): true
-                            trigger（触发条件）: 'blur（光标移开触发）'：
-                       */
+                        // required(必须): true
+                        // trigger（触发条件）: blur（光标移开触发）
                         {required: true, message: '请输入部门编号', trigger: 'blur'}
                     ]
                 },
@@ -224,9 +220,6 @@
                 this.listLoading = true;
                 //NProgress.start();
                 this.$http.post("/dm/page", param).then((res) => {
-                    console.log("++++++++++++++++++")
-                    console.log(res)
-                    console.log("++++++++++++++++++")
                     // 总数
                     this.total = res.data.data.total;
                     // 数据传递赋值
@@ -303,7 +296,7 @@
                             }
 */
                             let para = Object.assign({}, this.addForm);
-                            this.$http.post("/dept/saveOrUpdate", para).then((res) => {
+                            this.$http.post("/dm/input", para).then((res) => {
                                 this.addLoading = false;
                                 //elementUi的提示弹框
                                 this.$message({
@@ -361,8 +354,10 @@
             },
             getEmployees() {
                 //发一个axios异步请求
-                this.$http.get("/emp/findAll").then(res => {
+                this.$http.get("/emp/all").then(res => {
+                    console.log("++++++++++++++++++")
                     console.log(res.data.data)
+                    console.log("++++++++++++++++++")
                     this.employees = res.data.data;
                 })
             },

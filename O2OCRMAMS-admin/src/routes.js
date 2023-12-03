@@ -24,6 +24,7 @@ let routes = [
         iconCls: 'el-icon-s-custom',
         children: [
             { path: '/dm', component: Department, name: '部门管理'},
+            // { path: '/emp', component: Employee, name: '员工管理'},
         ]
     },
     {
